@@ -23,15 +23,18 @@ public class NotificationService {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setFrom("abc@gmail.com");
-            messageHelper.setTo(orderPlacedEvent.getEmail());
+            messageHelper.setTo(orderPlacedEvent.getEmail().toString());
             messageHelper.setSubject(String.format("Your order with Order number %s is placed successfully", orderPlacedEvent.getOrderNumber()));
             messageHelper.setText(String.format("""
-                    Hi,
+                    Hi %s %s,
                     Your order with order number %s is now placed.
                     
                     Best regards,
                     Kaab Islam
-                    """, orderPlacedEvent.getOrderNumber()));
+                    """,
+                    orderPlacedEvent.getFirstName().toString(),
+                    orderPlacedEvent.getLastName().toString(),
+                    orderPlacedEvent.getOrderNumber()));
         };
 
         try {
